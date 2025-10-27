@@ -19,6 +19,110 @@
   }
 }
 
+/* Service Component Styles */
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+}
+
+.marquee-content {
+  display: inline-flex;
+}
+
+.marquee-text {
+  display: inline-flex;
+  align-items: center;
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: white;
+  padding-right: 4rem;
+}
+
+.icon-gap {
+  margin: 0 1rem;
+}
+
+/* Outlined font effect only for selected text */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px #f1c40f;
+}
+
+/* Animations */
+.marquee-left {
+  animation: marquee-left 60s linear infinite;
+}
+
+.marquee-right {
+  animation: marquee-right 60s linear infinite;
+}
+
+@keyframes marquee-left {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes marquee-right {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Client Testimonials Styles */
+
+.testimonial-track {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.testimonial-slide {
+  display: flex;
+  gap: 3rem;
+  animation: slide 35s linear infinite;
+}
+
+.testimonial-card {
+  min-width: 420px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 2rem;
+  border-radius: 1.2rem;
+}
+
+@keyframes slide {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Use your existing outline style */
+.outline-text {
+  color: transparent;
+  -webkit-text-stroke: 2px #f1c40f;
+}
+
+.outline-white {
+  color: transparent;
+  -webkit-text-stroke: 2px white;
+}
+
+
+
+
 body {
   background: var(--background);
   color: var(--foreground);
