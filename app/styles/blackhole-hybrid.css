@@ -1,0 +1,145 @@
+/* blackhole-hybrid.css
+   Hybrid blackhole: video core + canvas particles + warp glow overlays
+   Purple-violet theme (adjust --accent if needed)
+*/
+
+:root {
+  --accent: 180, 0, 255; /* purple-violet (r,g,b) */
+  --accent-strong: 200, 50, 255;
+  --bg: #030307;
+  --text: #e6e6ee;
+}
+
+/* Base wrapper */
+.blackhole-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: radial-gradient(circle at center, #05050a 0%, #020206 50%, #000 100%);
+  color: var(--text);
+}
+
+/* Video core - covers full hero */
+.blackhole-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  pointer-events: none;
+  filter: contrast(1.05) saturate(1.05) brightness(0.95);
+}
+
+/* Canvas for procedural particles */
+.blackhole-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  opacity: 0.95;
+}
+
+/* Warp overlay (subtle lensing + vignette + glow) */
+.blackhole-lens {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 52%,
+      rgba(var(--accent), 0.12) 0%,
+      rgba(var(--accent-strong), 0.06) 10%,
+      rgba(0,0,0,0) 35%),
+    radial-gradient(ellipse at center,
+      rgba(0,0,0,0.0) 0%,
+      rgba(0,0,0,0.45) 65%,
+      rgba(0,0,0,0.85) 100%);
+  filter: blur(10px) contrast(1.05);
+}
+
+/* Event horizon core (deep black center for perfect silhouette) */
+.blackhole-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(42vmin, 520px);
+  height: min(42vmin, 520px);
+  border-radius: 50%;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%,
+      rgba(0,0,0,1) 0%,
+      rgba(0,0,0,0.95) 18%,
+      rgba(0,0,0,0.0) 32%);
+  box-shadow:
+    0 0 120px rgba(var(--accent), 0.25),
+    inset 0 0 40px rgba(0,0,0,0.6);
+}
+
+/* Accretion rim glow (thin ring) */
+.blackhole-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(min(42vmin, 520px) * 1.22);
+  height: calc(min(42vmin, 520px) * 1.22);
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  background: conic-gradient(
+    from 0deg,
+    rgba(255,255,255,0.95) 0deg 30deg,
+    rgba(var(--accent-strong),0.55) 30deg 90deg,
+    rgba(var(--accent),0.22) 90deg 210deg,
+    rgba(255,255,255,0.7) 210deg 270deg,
+    rgba(var(--accent-strong),0.4) 270deg 360deg
+  );
+  filter: blur(16px) saturate(1.2);
+  opacity: 0.9;
+  mix-blend-mode: screen;
+}
+
+/* Subtle rotational animation of the ring */
+@keyframes ringRotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.blackhole-ring.rotate { animation: ringRotate 34s linear infinite; }
+
+/* Foreground content should be above everything */
+.hero-content {
+  position: relative;
+  z-index: 10;
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+
+/* Text styling adjustments */
+.hero-title { color: var(--text); }
+.hero-sub { color: rgba(230,230,238,0.85); }
+
+/* CTA button example */
+.btn-accent {
+  background: rgba(var(--accent-strong),0.12);
+  border: 1px solid rgba(var(--accent-strong),0.18);
+  color: var(--text);
+}
+.btn-accent:hover {
+  background: rgba(var(--accent-strong),0.16);
+  transform: translateY(-2px);
+  transition: transform .2s ease;
+}
+
+/* Ensure responsiveness */
+@media (max-width: 640px) {
+  .blackhole-core, .blackhole-ring {
+    width: 62vmin;
+    height: 62vmin;
+  }
+}

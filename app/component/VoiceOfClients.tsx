@@ -27,37 +27,46 @@ const testimonials = [
 
 function VoiceOfClients() {
   return (
-    <section className="w-full py-24 px-12 overflow-hidden">
+    // OPTIMIZATION: Reduced padding for mobile (px-6) and vertical padding (py-16)
+    <section className="w-full text-white py-16 lg:py-24 px-6 lg:px-12 overflow-hidden">
       
       {/* Title */}
-      <div className="text-center mb-16">
-        <h2 className="text-5xl font-bold text-white tracking-wide">
-          <span className="outline-text">VOICE</span> OF OUR CLIENTS
+      {/* OPTIMIZATION: Reduced title size and margin for mobile */}
+      <div className="text-center mb-12 md:mb-16">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-wide">
+          <span className="t">VOICE</span> OF OUR CLIENTS
         </h2>
       </div>
 
       {/* Infinite Scroll Testimonials */}
+      {/* NOTE: Your external CSS for these classes must also be responsive. */}
       <div className="testimonial-track">
         <div className="testimonial-slide">
           {testimonials.concat(testimonials).map((t, i) => (
             <div
               key={i}
-              className="testimonial-card"
+              // This card's width should be set in your CSS file
+              className="testimonial-card" 
             >
-              <PiQuotesFill className="text-yellow-300 text-5xl mb-4" />
-              <p className="text-white/90 text-lg leading-relaxed">{t.feedback}</p>
+              {/* OPTIMIZATION: Reduced icon size on mobile */}
+              <PiQuotesFill className="text-yellow-300 text-4xl md:text-5xl mb-4" />
+              
+              {/* OPTIMIZATION: Reduced text size on mobile */}
+              <p className="text-white/90 text-base md:text-lg leading-relaxed">{t.feedback}</p>
 
-              <div className="flex items-center mt-8 gap-4">
+              {/* OPTIMIZATION: Reduced margin-top on mobile */}
+              <div className="flex items-center mt-6 md:mt-8 gap-4">
                 <Image
                   src={t.img}
                   alt={t.name}
                   width={55}
                   height={55}
-                  className="rounded-full border border-blue-200 object-cover"
+                  // OPTIMIZATION: Made avatar slightly smaller on mobile
+                  className="rounded-full border border-blue-200 object-cover w-12 h-12 md:w-[55px] md:h-[55px]"
                 />
                 <div>
-                  <p className="text-white font-semibold">{t.name}</p>
-                  <p className="text-white/60 text-sm">{t.role}</p>
+                  <p className="text-white font-semibold text-sm md:text-base">{t.name}</p>
+                  <p className="text-white/60 text-xs md:text-sm">{t.role}</p>
                 </div>
               </div>
             </div>
@@ -65,38 +74,39 @@ function VoiceOfClients() {
         </div>
       </div>
 
-    {/* Logo Footer */}
-    <div className="flex justify-center mt-20 gap-16">
-      <Image
-        src="/logo.svg"
-        alt="SYNT-X Logo"
-        width={60}
-        height={60}
-        className="opacity-70 hover:opacity-100 transition-opacity duration-300"
-      />
-    <Image
-        src="/redbull-logo.svg" 
-        alt="Red Bull Logo"
-        width={60}
-        height={60}
-        className="opacity-70 hover:opacity-100 transition-opacity duration-300"
-      />
-    <Image
-        src="/logo.svg" 
-        alt="SYNT-X Logo"
-        width={60}
-        height={60}
-        className="opacity-70 hover:opacity-100 transition-opacity duration-300"
-      />
-    <Image
-        src="/logo.svg" 
-        alt="SYNT-X Logo"
-        width={60}
-        height={60}
-        className="opacity-70 hover:opacity-100 transition-opacity duration-300"
-      />
-    </div>
-
+      {/* Logo Footer */}
+      {/* OPTIMIZATION: Reduced margin-top and gap for mobile */}
+      <div className="flex flex-wrap justify-center mt-16 md:mt-20 gap-10 md:gap-16">
+        {/* OPTIMIZATION: Made logos smaller on mobile */}
+        <Image
+          src="/logo.svg"
+          alt="SYNT-X Logo"
+          width={60}
+          height={60}
+          className="w-10 h-10 md:w-[60px] md:h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
+        />
+        <Image
+          src="/redbull-logo.svg" 
+          alt="Red Bull Logo"
+          width={60}
+          height={60}
+          className="w-10 h-10 md:w-[60px] md:h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
+        />
+        <Image
+          src="/logo.svg" 
+          alt="SYNT-X Logo"
+          width={60}
+          height={60}
+          className="w-10 h-10 md:w-[60px] md:h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
+        />
+        <Image
+          src="/logo.svg" 
+          alt="SYNT-X Logo"
+          width={60}
+          height={60}
+          className="w-10 h-10 md:w-[60px] md:h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
+        />
+      </div>
     </section>
   );
 }

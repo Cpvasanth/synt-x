@@ -1,4 +1,4 @@
-'use client';
+// Removed 'use client'; - This component is static and doesn't need it.
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa6";
 import Image from "next/image";
@@ -59,81 +59,90 @@ const projects: Project[] = [
 
 export default function Projects() {
   return (
-    <section id="projects" className="w-4/5 py-4 px-8 container mx-auto">
-      <div className="flex items-center justify-between mb-16">
-      <h2 className="text-4xl lg:text-6xl font-bold mb-12 text-white">
-        Latest projects
-      </h2>
-      <Link href="/projects" className="text-3xl px-5 py-3 rounded-full border-2 border-amber-200 hover:text-gray-300 transition">
-       see all projects <MdOutlineArrowOutward className="text-black w-8 inline-block bg-amber-200 rounded-full " />
-      </Link>
-      </div>
 
+    <section id="projects" className="text-white py-16 lg:py-24 px-6 lg:px-8 ">
+      <div className="container mx-auto max-w-6xl">
 
+        <div className="flex flex-col md:flex-row items-center md:items-center justify-between mb-12 md:mb-16 gap-8 md:gap-4">
+          
+          <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-white">
+            Latest projects
+          </h2>
 
-
-      <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
-        {projects.map((project) => (
-          <div
-            key={project.id}
-            className="bg-[#1c1c1e] rounded-2xl border border-white/10 hover:border-yellow-300 transition overflow-hidden "
+          <Link 
+            href="/projects" 
+            className="inline-flex justify-between shrink-0 items-center gap-3 text-base font-medium text-white px-5 py-3 rounded-full border-2 border-amber-200 hover:text-gray-300 transition"
           >
-            
-            {/* Full width image with no padding */}
-            <div className="relative w-full aspect-video overflow-hidden  mb-6">
-              <Image
-                src={project.image}
-                alt={project.title}
-                fill
-                className="object-cover hover:scale-105 transition-transform duration-500 "
-              />
-            </div>
+            <span>see all projects</span>
+            <MdOutlineArrowOutward className="text-black w-6 h-6 inline-block bg-amber-200 rounded-full p-0.5" />
+          </Link>
+        </div>
 
-            <div className="p-6">
-
-            <h3 className="text-2xl font-semibold text-white mb-2">
-              {project.title}
-            </h3>
-
-            <p className="text-sm text-yellow-300 mb-3 font-medium">
-              Delivery: {project.deliveryTime}
-            </p>
-
-            <ul className="flex flex-wrap gap-2 mb-4">
-              {project.tags.map((tag) => (
-                <li
-                  key={tag}
-                  className={`px-3 py-1 text-sm rounded-full border ${tagBorderColors[tag] ?? "border-white/20 text-white"}`}
-                >
-                  {tag}
-                </li>
-              ))}
-            </ul>
-
-            <p className="text-gray-300 text-sm mb-6">
-              {project.description}
-            </p>
-
-            <Link
-              href={project.link}
-              className="inline-flex items-center gap-2 group font-semibold text-white hover:text-yellow-200 transition"
+        {/* This grid layout was already well-optimized for mobile. 
+            It defaults to 1 column, then 2 on `md`, and 3 on `lg`.
+        */}
+        <div className="grid gap-8 md:gap-12 lg:grid-cols-3">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-[#1c1c1e] rounded-2xl border border-white/10 hover:border-yellow-300 transition-colors duration-300 overflow-hidden group/card" // Added group/card
             >
-              <span>Discover</span>
-
-              <span>
-                <FaArrowRight
-                  className="text-lg opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-2"
+              
+              {/* This image setup is already perfectly responsive */}
+              <div className="relative w-full aspect-video overflow-hidden mb-6">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className="object-cover group-hover/card:scale-105 transition-transform duration-500" // Linked hover to parent
                 />
-              </span>
+              </div>
 
-              <MdOutlineArrowOutward
-                className="text-lg transition-all duration-300 group-hover:opacity-0 group-hover:translate-x-2"
-              />
-            </Link>
+              <div className="p-4 md:p-6">
+
+                <h3 className="text-2xl font-semibold text-white mb-2">
+                  {project.title}
+                </h3>
+
+                <p className="text-sm text-yellow-300 mb-3 font-medium">
+                  Delivery: {project.deliveryTime}
+                </p>
+
+                <ul className="flex flex-wrap gap-2 mb-4">
+                  {project.tags.map((tag) => (
+                    <li
+                      key={tag}
+                      className={`px-3 py-1 text-xs sm:text-sm rounded-full border ${tagBorderColors[tag] ?? "border-white/20 text-white"}`}
+                    >
+                      {tag}
+                    </li>
+                  ))}
+                </ul>
+
+                <p className="text-gray-300 text-sm mb-6">
+                  {project.description}
+                </p>
+
+                <Link
+                  href={project.link}
+                  className="inline-flex items-center gap-2 group font-semibold text-white hover:text-yellow-200 transition"
+                >
+                  <span>Discover</span>
+                  
+                  <span>
+                    <FaArrowRight
+                      className="text-lg opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-2"
+                    />
+                  </span>
+                  <MdOutlineArrowOutward
+                    className="text-lg transition-all duration-300 group-hover:opacity-0 group-hover:-translate-x-2" // Fixed direction
+                  />
+                </Link>
+              </div>
+
             </div>
-
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

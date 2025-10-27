@@ -120,8 +120,76 @@
   -webkit-text-stroke: 2px white;
 }
 
+/* hero background styles */
 
+/* Layer 1: Deep Space Core */
+.blackhole-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center,
+      rgba(30, 0, 40, 0.9) 0%,
+      rgba(5, 0, 10, 0.85) 20%,
+      rgba(0, 0, 0, 1) 50%,
+      rgba(0, 0, 0, 1) 100%);
+  animation: vortex 28s infinite linear;
+  opacity: 0.85;
+  z-index: 1;
+}
 
+/* Layer 2: Event Horizon Glow */
+.blackhole-glow {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center,
+      rgba(180, 0, 255, 0.35) 0%,
+      rgba(100, 0, 180, 0.25) 12%,
+      rgba(0, 0, 0, 0) 38%);
+  animation: pulse 4.5s ease-in-out infinite;
+  filter: blur(50px);
+  z-index: 2;
+}
+
+/* Layer 3: Stars */
+.stars {
+  position: absolute;
+  inset: 0;
+  background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+  animation: drift 110s linear infinite;
+  opacity: 0.30;
+  z-index: 0;
+}
+
+/* Animations */
+@keyframes vortex {
+  0% {
+    transform: rotate(0deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1.1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.20;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(1.03);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-180px, 260px, 0);
+  }
+}
 
 body {
   background: var(--background);
