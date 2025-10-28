@@ -1,80 +1,35 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
-// Simple HTML-escaping utility to sanitize user inputs
 function sanitize(input: string): string {
-  return input
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/`/g, '&#x60;')
-    .trim();
-}
-
-// Basic RFC5322 email validation
-function isValidEmail(email: string): boolean {
-  const emailRegex =
-    /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  return emailRegex.test(email);
-}
-
-// Basic SQL Injection filter
-function isInjectionAttempt(value: string): boolean {
-  const pattern = /(drop\s+table|union\s+select|insert\s+into|update\s+\w+|delete\s+from)/i;
-  return pattern.test(value);
+  return input.replace(/[<>&'"]/g, '');
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    let {
-      name, email, phone, country, company, subject, message, subscription
-    } = body;
+    let { name, email, phone, country, company, subject, message, subscription } = body;
 
     if (!name || !email || !subject || !message) {
-      return NextResponse.json(
-        { error: 'Required fields are missing.' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'Required fields are missing.' }, { status: 400 });
     }
 
-    // Sanitize inputs
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: 'Invalid email format.' }, { status: 400 });
+    }
+
+    // Prevent injection inside email templates
     name = sanitize(name);
     email = sanitize(email);
-    phone = phone ? sanitize(phone) : '';
-    country = sanitize(country);
-    company = company ? sanitize(company) : '';
+    phone = sanitize(phone || '');
+    country = sanitize(country || '');
+    company = sanitize(company || '');
     subject = sanitize(subject);
     message = sanitize(message);
 
-    // Validations
-    if (!isValidEmail(email)) {
-      return NextResponse.json(
-        { error: 'Invalid email address provided.' },
-        { status: 422 }
-      );
-    }
-
-    if (subject.length > 120) {
-      return NextResponse.json(
-        { error: 'Subject exceeds length limit.' },
-        { status: 422 }
-      );
-    }
-
-    if (isInjectionAttempt(subject) || isInjectionAttempt(message)) {
-      return NextResponse.json(
-        { error: 'Suspicious content blocked.' },
-        { status: 403 }
-      );
-    }
-
     if (!process.env.SMTP_EMAIL || !process.env.SMTP_PASSWORD || !process.env.RECEIVER_EMAIL) {
-      return NextResponse.json(
-        { error: 'Email server is not configured properly.' },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: 'Email server is not configured.' }, { status: 500 });
     }
 
     const transporter = nodemailer.createTransport({
@@ -98,7 +53,7 @@ export async function POST(request: Request) {
         <p><strong>Phone:</strong> ${phone || '-'}</p>
         <p><strong>Country:</strong> ${country}</p>
         <p><strong>Company:</strong> ${company || '-'}</p>
-        <p><strong>Active Synt-X Subscription:</strong> ${subscription ? 'Yes' : 'No'}</p>
+        <p><strong>Active Subscription:</strong> ${subscription ? 'Yes' : 'No'}</p>
         <br/>
         <p><strong>Message:</strong><br/>${message}</p>
       `
@@ -112,9 +67,8 @@ export async function POST(request: Request) {
         <div style="font-family:Arial;padding:20px;">
           <h2>Thank you for contacting Synt-X</h2>
           <p>Hello <strong>${name}</strong>,</p>
-          <p>Your message has been received. Our team will respond shortly.</p>
-          <br/>
-          <p style="font-size:14px;color:#888">Synt-X Web Engineering</p>
+          <p>Your message has been successfully received. Our team will respond shortly.</p>
+          <p style="margin-top:30px;font-size:14px;color:#888">Synt-X Web Engineering</p>
         </div>
       `
     };
@@ -124,16 +78,10 @@ export async function POST(request: Request) {
       transporter.sendMail(userMail)
     ]);
 
-    return NextResponse.json({
-      success: true,
-      message: 'Emails successfully sent.'
-    });
-
+    return NextResponse.json({ success: true, message: 'Emails successfully sent.' });
+    
   } catch (error) {
     console.error('Email Error:', error);
-    return NextResponse.json(
-      { error: 'Failed to send message.' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'Failed to send message.' }, { status: 500 });
   }
 }

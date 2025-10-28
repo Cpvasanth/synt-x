@@ -2,7 +2,18 @@
 
 import React, { useState } from 'react';
 
-function ContactPage() {
+interface ContactFormData {
+  name: string;
+  email: string;
+  phone?: string;
+  country: string;
+  company?: string;
+  subject: string;
+  message: string;
+  subscription: boolean;
+}
+
+export default function ContactPage() {
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -10,8 +21,23 @@ function ContactPage() {
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    const data = Object.fromEntries(formData.entries());
-    data.subscription = formData.get('subscription') === 'on';
+
+    const data: ContactFormData = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      country: formData.get('country') as string,
+      company: formData.get('company') as string,
+      subject: formData.get('subject') as string,
+      message: formData.get('message') as string,
+      subscription: formData.get('subscription') === 'on'
+    };
+
+    if (!data.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      alert('Please enter a valid email.');
+      setLoading(false);
+      return;
+    }
 
     const res = await fetch('/api/contact', {
       method: 'POST',
@@ -35,7 +61,11 @@ function ContactPage() {
   return (
     <main className="min-h-screen pt-28 pb-20 px-6 md:px-24 bg-black text-white">
       <h1 className="text-4xl font-bold mb-12 text-center">Contact Us</h1>
-      <p className="mb-8 ">Use the form below to get in touch with us about your project or inquiry. Whether you have questions, need a quote, or want to discuss your ideas, we're here to help. The information you provide will help us understand your needs and serve as a starting point for our conversation. Please note that any details shared here are for initial contact purposes only and do not represent a binding agreement or formal proposal.</p>
+      <p className="mb-8">
+        Use the form below to get in touch with us about your project or inquiry.
+        We are here to help. Please share the necessary details to assist us in
+        understanding your request.
+      </p>
 
       <form
         onSubmit={handleSubmit}
@@ -44,66 +74,36 @@ function ContactPage() {
         {/* Name */}
         <div className="flex flex-col space-y-2">
           <label htmlFor="name" className="text-sm font-medium">Your Name *</label>
-          <input
-            id="name"
-            name="name"
-            required
-            className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300"
-          />
+          <input id="name" name="name" required className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300" />
         </div>
 
         {/* Email */}
         <div className="flex flex-col space-y-2">
           <label htmlFor="email" className="text-sm font-medium">Your Email *</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            required
-            className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300"
-          />
+          <input id="email" name="email" type="email" required className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300" />
         </div>
 
         {/* Phone */}
         <div className="flex flex-col space-y-2">
           <label htmlFor="phone" className="text-sm font-medium">Phone</label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300"
-          />
+          <input id="phone" name="phone" type="tel" className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300" />
         </div>
 
         {/* Country */}
         <div className="flex flex-col space-y-2">
           <label htmlFor="country" className="text-sm font-medium">Country *</label>
-          <input
-            id="country"
-            name="country"
-            required
-            className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300"
-          />
+          <input id="country" name="country" required className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300" />
         </div>
 
         {/* Company */}
         <div className="flex flex-col space-y-2 md:col-span-2">
           <label htmlFor="company" className="text-sm font-medium">Company</label>
-          <input
-            id="company"
-            name="company"
-            className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300"
-          />
+          <input id="company" name="company" className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300" />
         </div>
 
-        {/* Checkbox */}
+        {/* Subscription */}
         <div className="md:col-span-2 flex items-center space-x-3">
-          <input
-            id="subscription"
-            name="subscription"
-            type="checkbox"
-            className="h-5 w-5"
-          />
+          <input id="subscription" name="subscription" type="checkbox" className="h-5 w-5" />
           <label htmlFor="subscription" className="text-sm">
             I have an active subscription with Synt-X.
           </label>
@@ -112,24 +112,13 @@ function ContactPage() {
         {/* Subject */}
         <div className="flex flex-col space-y-2 md:col-span-2">
           <label htmlFor="subject" className="text-sm font-medium">Subject *</label>
-          <input
-            id="subject"
-            name="subject"
-            required
-            className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300"
-          />
+          <input id="subject" name="subject" required className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 focus:outline-none focus:border-yellow-300" />
         </div>
 
         {/* Message */}
         <div className="flex flex-col space-y-2 md:col-span-2">
           <label htmlFor="message" className="text-sm font-medium">Your Message *</label>
-          <textarea
-            id="message"
-            name="message"
-            rows={6}
-            required
-            className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 resize-none focus:outline-none focus:border-yellow-300"
-          />
+          <textarea id="message" name="message" rows={6} required className="bg-neutral-900 border border-neutral-700 rounded-lg p-3 resize-none focus:outline-none focus:border-yellow-300" />
         </div>
 
         {/* Submit */}
@@ -146,5 +135,3 @@ function ContactPage() {
     </main>
   );
 }
-
-export default ContactPage;
