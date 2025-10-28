@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 interface ContactFormData {
   name: string;
@@ -15,6 +15,7 @@ interface ContactFormData {
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -22,45 +23,57 @@ export default function ContactPage() {
 
     const formData = new FormData(e.currentTarget);
 
-    const data: ContactFormData = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string,
-      country: formData.get('country') as string,
-      company: formData.get('company') as string,
-      subject: formData.get('subject') as string,
-      message: formData.get('message') as string,
-      subscription: formData.get('subscription') === 'on'
+    const getValue = (key: string): string => {
+      const value = formData.get(key);
+      return typeof value === 'string' ? value : '';
     };
 
-    if (!data.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    const data: ContactFormData = {
+      name: getValue('name'),
+      email: getValue('email'),
+      phone: getValue('phone') || undefined,
+      country: getValue('country'),
+      company: getValue('company') || undefined,
+      subject: getValue('subject'),
+      message: getValue('message'),
+      subscription: formData.get('subscription') != null
+    };
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
       alert('Please enter a valid email.');
       setLoading(false);
       return;
     }
 
-    const res = await fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    });
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
 
-    const result = await res.json();
-    setLoading(false);
+      const result = await res.json();
+      setLoading(false);
 
-    if (res.ok) {
-      alert('Message sent successfully.');
-      e.currentTarget.reset();
-    } else {
-      alert(result.error || 'Unable to send your request. Try again later.');
+      if (res.ok) {
+        formRef.current?.reset();
+        alert('Message sent successfully.');
+      } else {
+        alert(result.error || 'Unable to send your request. Try again later.');
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+      alert('Network error. Please try again later.');
     }
   }
 
   return (
     <main className="min-h-screen pt-28 pb-20 px-6 md:px-24 bg-black text-white">
       <h1 className="text-4xl font-bold mb-12 text-center">Contact Us</h1>
+
       <p className="mb-8">
         Use the form below to get in touch with us about your project or inquiry.
         We are here to help. Please share the necessary details to assist us in
@@ -68,6 +81,7 @@ export default function ContactPage() {
       </p>
 
       <form
+        ref={formRef}
         onSubmit={handleSubmit}
         className="grid grid-cols-1 md:grid-cols-2 gap-8"
       >
