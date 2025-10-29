@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { allProjects } from "../data/projects";
+import FaqSection from "../component/FaqSection";
+
 
 export default function ProjectsPage() {
   return (
@@ -71,6 +73,7 @@ export default function ProjectsPage() {
           ))}
         </div>
       </div>
+      <FaqSection />
     </main>
   );
 }

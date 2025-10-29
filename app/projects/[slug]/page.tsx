@@ -5,6 +5,8 @@ import Image from "next/image";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa6";
 import { useParams, notFound } from "next/navigation";
 import { allProjects } from "../../data/projects";
+// import FaqSection from "../../component/FaqSection";
+
 
 export default function ProjectDetailPage() {
   const { slug } = useParams();
@@ -72,6 +74,7 @@ export default function ProjectDetailPage() {
           )}
         </div>
       </div>
+      {/* <FaqSection /> */}
     </main>
   );
 }

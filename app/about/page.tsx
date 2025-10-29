@@ -1,20 +1,21 @@
 import Image from "next/image";
 import ServicesSection from "../component/ServicesSection";
+import FaqSection from "../component/FaqSection";
 
 function AboutPage() {
   return (
-    <main className="bg-black text-gray-200 min-h-screen py-24 px-6">
+    <main className="bg-black text-gray-200 min-h-screen py-20 px-6">
       <section className="container mx-auto max-w-5xl flex flex-col gap-10 mt-20">
         
         {/* Title */}
-        <h1 className="text-7xl lg:text-6xl font-bold text-center">
+        <h1 className="text-5xl lg:text-6xl font-bold text-center">
           About <span className="text-[#adbd47]">Us</span>
         </h1>
 
         {/* Description */}
-        <div className="flex  gap-6 justify-between text-lg leading-relaxed text-gray-300">
+        <div className="flex flex-col lg:flex-row gap-6 justify-between text-lg leading-relaxed text-gray-300">
           <p>
-            Founded in 2021, <span className="font-semibold text-white">Syntx Tech</span> specializes in crafting high-performance digital experiences for brands aiming to lead tomorrow’s markets. The team combines multidisciplinary expertise in UI engineering, digital product strategy, web performance optimization, and visual identity development. Every project begins with a detailed discovery phase to understand business goals, audience behavior, and the competitive landscape.
+            Founded in 2025, <span className="font-semibold text-white">Syntx Tech</span> specializes in crafting high-performance digital experiences for brands aiming to lead tomorrow’s markets. The team combines multidisciplinary expertise in UI engineering, digital product strategy, web performance optimization, and visual identity development. Every project begins with a detailed discovery phase to understand business goals, audience behavior, and the competitive landscape.
           </p>
 
           <p>
@@ -41,6 +42,8 @@ function AboutPage() {
 
         {/* Services Section */}
         <ServicesSection />
+        {/* FAQ Section */}
+        <FaqSection />
 
       </section>
     </main>

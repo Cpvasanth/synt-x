@@ -7,13 +7,13 @@ const services = [
   { id: "01", title: "Web design" },
   { id: "02", title: "Logo design" },
   { id: "03", title: "AD Shooting" },
-  { id: "04", title: "SEO" },
-  { id: "05", title: "Marketing" },
+  // { id: "04", title: "SEO" },
+  { id: "04", title: "Marketing" },
 ];
 
 function Service() {
   return (
-    <section className="w-full py-16 sm:py-20 select-none overflow-hidden">
+    <section className="w-full py-4 sm:py-5 select-none overflow-hidden">
 
       {/* Marquee Top Line */}
       <div className="marquee-container mb-3 sm:mb-4">

@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { services } from "@/app/data/services";
+// import FaqSection from "../../component/FaqSection";
+
 
 export async function generateStaticParams() {
   return services.map((service) => ({
@@ -119,6 +121,7 @@ export default async function ServiceDetail({
           </Link>
         </div> */}
       </div>
+      {/* <FaqSection /> */}
     </main>
   );
 }

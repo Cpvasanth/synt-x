@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
+// import FaqSection from "../component/FaqSection";
+
 
 interface ContactFormData {
   name: string;
@@ -146,6 +148,7 @@ export default function ContactPage() {
           </button>
         </div>
       </form>
+      {/* <FaqSection /> */}
     </main>
   );
 }

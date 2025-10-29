@@ -89,7 +89,7 @@ const FaqSection: React.FC = () => {
   };
 
   return (
-    <section className=" text-white py-20 px-6 lg:py-24 lg:px-8">
+    <section className=" text-white py-4 px-6 lg:py-24 lg:px-8">
       <div className="container mx-auto max-w-6xl">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3 lg:gap-16">
           

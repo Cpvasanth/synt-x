@@ -93,31 +93,31 @@ export const services: Service[] = [
       { label: "Color Variations", standard: true, custom: true },
     ],
   },
-  {
-    name: "AD Shooting",
-    slug: "ad-shooting",
-    description: "Show your brand through powerful visuals.",
-    longDescription:
-      "Our production team creates professional photo and video content designed to sell.",
-    color: "from-red-500/30 to-red-700/30",
-    icon: "🎥",
-    image: "/services/ad_shooting.png",
+  // {
+  //   name: "AD Shooting",
+  //   slug: "ad-shooting",
+  //   description: "Show your brand through powerful visuals.",
+  //   longDescription:
+  //     "Our production team creates professional photo and video content designed to sell.",
+  //   color: "from-red-500/30 to-red-700/30",
+  //   icon: "🎥",
+  //   image: "/services/ad_shooting.png",
 
-    process: [
-      { title: "Creative Direction", description: "Campaign ideas & storyboard planning." },
-      { title: "Production", description: "Shooting with professional gear + crew." },
-      { title: "Editing", description: "Color grading, sound, motion graphics." },
-      { title: "Delivery", description: "Ads optimized for each platform." },
-    ],
+  //   process: [
+  //     { title: "Creative Direction", description: "Campaign ideas & storyboard planning." },
+  //     { title: "Production", description: "Shooting with professional gear + crew." },
+  //     { title: "Editing", description: "Color grading, sound, motion graphics." },
+  //     { title: "Delivery", description: "Ads optimized for each platform." },
+  //   ],
 
-    features: [
-      { label: "Full HD Output", standard: true, custom: true },
-      { label: "Studio Setup", standard: false, custom: true },
-      { label: "Drone Shoots", standard: false, custom: true },
-      { label: "Multiple Ad Sizes", standard: true, custom: true },
-      { label: "Talent Management", standard: false, custom: true },
-    ],
-  },
+  //   features: [
+  //     { label: "Full HD Output", standard: true, custom: true },
+  //     { label: "Studio Setup", standard: false, custom: true },
+  //     { label: "Drone Shoots", standard: false, custom: true },
+  //     { label: "Multiple Ad Sizes", standard: true, custom: true },
+  //     { label: "Talent Management", standard: false, custom: true },
+  //   ],
+  // },
   {
     name: "SEO",
     slug: "seo",

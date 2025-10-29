@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
+import FaqSection from "../component/FaqSection";
+
 
 // --- TYPE DEFINITIONS ---
 
@@ -419,6 +421,7 @@ export default function PageCalculator() {
         </aside>
 
       </div>
+      <FaqSection />
     </main>
   );
 }

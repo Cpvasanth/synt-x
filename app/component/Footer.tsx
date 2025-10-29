@@ -10,13 +10,15 @@ const navigationLinks = [
   { name: 'Home', href: '/' },
   { name: 'About us', href: '/about' },
   { name: 'Projects', href: '/projects' },
+  { name: 'Services', href: '/services' },
+  { name: 'Calculator', href: '/calculator' },
   { name: 'Contact us', href: '/contact' },
 ];
 
 const servicesLinks = [
   { name: 'Web design', href: '/services/web-design' },
   { name: 'Logo design', href: '/services/logo-design' },
-  { name: 'Ad Shooting', href: '/services/ad-shooting' },
+  // { name: 'Ad Shooting', href: '/services/ad-shooting' },
   { name: 'SEO', href: '/services/seo' },
   { name: 'Marketing', href: '/services/marketing' },
 ];
@@ -29,7 +31,7 @@ const socialLinks = [
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-black text-white py-16 px-6 lg:px-8">
+    <footer className="bg-black text-white py-2 px-6 lg:px-8">
       <div className="container mx-auto max-w-6xl text-center md:text-left">
 
         {/* CTA */}

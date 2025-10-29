@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { useRef, useEffect, useState } from "react";
 import { services } from "../data/services";
+import FaqSection from "../component/FaqSection";
+
 
 export default function ServicesPage() {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -102,6 +104,7 @@ export default function ServicesPage() {
           />
         ))}
       </div>
+      <FaqSection />
     </main>
   );
 }
