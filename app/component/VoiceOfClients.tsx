@@ -14,14 +14,14 @@ const testimonials = [
     role: "CEO, VisionWorks",
     feedback:
       "Their creative approach to logo and web identity directly boosted our engagement and conversions.",
-    img: "/clients/client2.jpg"
+    img: "/clients/client2.png"
   },
   {
     name: "Maya Fernandez",
     role: "Founder, UrbanLens",
     feedback:
       "The photography and AD shooting delivered captured our essence perfectly. Absolutely thrilled with the results.",
-    img: "/clients/client3.jpg"
+    img: "/clients/client3.png"
   }
 ];
 
@@ -62,7 +62,7 @@ function VoiceOfClients() {
                   width={55}
                   height={55}
                   // OPTIMIZATION: Made avatar slightly smaller on mobile
-                  className="rounded-full border border-blue-200 object-cover w-12 h-12 md:w-[55px] md:h-[55px]"
+                  className="rounded-full border border-black object-cover w-12 h-12 md:w-[55px] md:h-[55px]"
                 />
                 <div>
                   <p className="text-white font-semibold text-sm md:text-base">{t.name}</p>
@@ -86,21 +86,21 @@ function VoiceOfClients() {
           className="w-10 h-10 md:w-[60px] md:h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
         />
         <Image
-          src="/redbull-logo.svg" 
-          alt="Red Bull Logo"
+          src="/vine.svg" 
+          alt="Vine Logo"
           width={60}
           height={60}
           className="w-10 h-10 md:w-[60px] md:h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
         />
         <Image
-          src="/logo.svg" 
+          src="/svg2.svg" 
           alt="SYNT-X Logo"
           width={60}
           height={60}
-          className="w-10 h-10 md:w-[60px] md:h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
+          className="text-white w-10 h-10 md:w-[60px] md:h-[60px] opacity-70 hover:opacity-100 transition-opacity duration-300"
         />
         <Image
-          src="/logo.svg" 
+          src="/svg4.svg" 
           alt="SYNT-X Logo"
           width={60}
           height={60}

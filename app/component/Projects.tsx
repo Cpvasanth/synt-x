@@ -1,4 +1,3 @@
-// Removed 'use client'; - This component is static and doesn't need it.
 import { MdOutlineArrowOutward } from "react-icons/md";
 import { FaArrowRight } from "react-icons/fa6";
 import Image from "next/image";
@@ -40,7 +39,7 @@ const projects: Project[] = [
   {
     id: 2,
     title: "E-Commerce Platform",
-    image: "/projects/project2.jpg",
+    image: "/projects/ecommerce.png",
     deliveryTime: "6 Weeks",
     tags: ["Shopify", "Payments", "CMS"],
     description: "Scalable and secure e-commerce experience optimized for mobile shopping.",
@@ -49,7 +48,7 @@ const projects: Project[] = [
   {
     id: 3,
     title: "SaaS Dashboard UI",
-    image: "/projects/project3.jpg",
+    image: "/projects/saas.png",
     deliveryTime: "4 Weeks",
     tags: ["Dashboard", "API", "Tailwind"],
     description: "A dynamic SaaS interface for real-time analytics and product performance.",

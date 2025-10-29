@@ -21,11 +21,11 @@ function NavBar() {
   ];
 
   const services = [
-    { id: '01', title: 'Web Design', href: '/services#web' },
-    { id: '02', title: 'Logo Design', href: '/services#logo' },
-    { id: '03', title: 'AD Shooting', href: '/services#ads' },
-    { id: '04', title: 'SEO', href: '/services#seo' },
-    { id: '05', title: 'Marketing', href: '/services#marketing' },
+    { id: '01', title: 'Web Design', href: '/services/web-design' },
+    { id: '02', title: 'Logo Design', href: '/services/logo-design' },
+    { id: '03', title: 'AD Shooting', href: '/services/ad-shooting' },
+    { id: '04', title: 'SEO', href: '/services/seo' },
+    { id: '05', title: 'Marketing', href: '/services/marketing' },
   ];
 
   const isActiveLink = (href: string) => pathname === href;

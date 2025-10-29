@@ -2,7 +2,8 @@ import React from 'react';
 import {
   FiArrowUpRight,
   FiInstagram,
-  FiYoutube
+  FiYoutube,
+  FiLinkedin
 } from 'react-icons/fi';
 
 const navigationLinks = [
@@ -23,6 +24,7 @@ const servicesLinks = [
 const socialLinks = [
   { name: 'Instagram', href: '#', icon: FiInstagram },
   { name: 'Youtube', href: '#', icon: FiYoutube },
+  { name: 'LinkedIn', href: '#', icon: FiLinkedin },
 ];
 
 const Footer: React.FC = () => {

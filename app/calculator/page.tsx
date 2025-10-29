@@ -86,21 +86,12 @@ const PACKS: PackDef[] = [
   { id: 'logo', label: 'Logo Pack', hours: 10, price: 1200, description: 'Elevate your brand with our logo pack, offering custom logo design and comprehensive graphic identity creation.' },
 ];
 
-// --- HELPER FUNCTIONS ---
+// --- HELPERS ---
 
-/**
- * Formats a number as Euros with a dot for the thousands separator.
- * e.g., 11050 -> "11.050€"
- */
 function formatEuro(value: number) {
   return `${value.toLocaleString('de-DE', { maximumFractionDigits: 0 })}€`;
 }
 
-// --- HELPER COMPONENTS ---
-
-/**
- * A custom toggle switch component
- */
 function ToggleSwitch({ checked, onChange }: { checked: boolean; onChange: () => void }) {
   return (
     <button
@@ -122,9 +113,6 @@ function ToggleSwitch({ checked, onChange }: { checked: boolean; onChange: () =>
   );
 }
 
-/**
- * A clickable option block with a label, description, and toggle switch.
- */
 function OptionToggle({
   label,
   description,
@@ -159,9 +147,7 @@ function OptionToggle({
         <ToggleSwitch
           checked={checked}
           onChange={() => {
-            if (!isDisabled) {
-              onChange();
-            }
+            if (!isDisabled) onChange();
           }}
         />
       </div>
@@ -169,25 +155,14 @@ function OptionToggle({
   );
 }
 
-/**
- * Wavy underline SVG for the header
- */
 function WavyLineIcon() {
   return (
     <svg width="200" height="12" viewBox="0 0 200 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M2 9.40084C10.6131 3.12078 23.956 2.06211 35.3238 2.06211C53.764 2.06211 66.377 9.40084 85.3406 9.40084C104.304 9.40084 116.917 2.06211 135.881 2.06211C147.249 2.06211 160.592 3.12078 177.728 9.40084"
-        stroke="#A8F000"
-        strokeWidth="3"
-        strokeLinecap="round"
-      />
+      <path d="M2 9.40084C10.6131 3.12078 23.956 2.06211 35.3238 2.06211C53.764 2.06211 66.377 9.40084 85.3406 9.40084C104.304 9.40084 116.917 2.06211 135.881 2.06211C147.249 2.06211 160.592 3.12078 177.728 9.40084" stroke="#A8F000" strokeWidth="3" strokeLinecap="round"/>
     </svg>
   );
 }
 
-/**
- * Arrow icon for the button
- */
 function ArrowRightIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -196,7 +171,7 @@ function ArrowRightIcon() {
   );
 }
 
-// --- MAIN COMPONENT ---
+// --- MAIN ---
 
 export default function PageCalculator() {
   const [planKey, setPlanKey] = useState<PlanKey>('custom');
@@ -206,30 +181,23 @@ export default function PageCalculator() {
   const [selectedPacks, setSelectedPacks] = useState<Record<string, boolean>>({});
   const [showValidation, setShowValidation] = useState<string | null>(null);
 
-  // sync pages when plan changes to plan default
   React.useEffect(() => {
     setPages(plan.defaultPages);
-    // Reset features, but respect customOnly flag
     setSelectedFeatures(prev => {
-        const newFeatures: Record<string, boolean> = {};
-        if (planKey === 'standard') {
-            for (const feature of FEATURES) {
-                if (!feature.customOnly && prev[feature.id]) {
-                    newFeatures[feature.id] = true;
-                }
-            }
-        } else {
-            // Keep all previously selected features when switching to custom
-            return prev;
+      const newFeatures: Record<string, boolean> = {};
+      if (planKey === 'standard') {
+        for (const feature of FEATURES) {
+          if (!feature.customOnly && prev[feature.id]) newFeatures[feature.id] = true;
         }
-        return newFeatures;
+      } else {
+        return prev;
+      }
+      return newFeatures;
     });
-    // Do not reset packs when switching plans
-    // setSelectedPacks({}); 
     setShowValidation(null);
   }, [planKey]);
 
-  const featuresAvailable = FEATURES; // Always show all, but disable some
+  const featuresAvailable = FEATURES; 
 
   const pageExtras = useMemo(() => {
     const extraPages = Math.max(0, Math.floor(pages) - plan.includedPages);
@@ -253,16 +221,11 @@ export default function PageCalculator() {
   }, [selectedPacks]);
 
   const totals = useMemo(() => {
-    const totalHours =
-      plan.baseHours + pageExtras.hours + featuresTotals.hours + packsTotals.hours;
-
-    const originalPrice =
-      plan.basePrice + pageExtras.price + featuresTotals.price + packsTotals.price;
-
+    const totalHours = plan.baseHours + pageExtras.hours + featuresTotals.hours + packsTotals.hours;
+    const originalPrice = plan.basePrice + pageExtras.price + featuresTotals.price + packsTotals.price;
     const discountRate = plan.discountPercent / 100;
     const discountAmount = Math.round(originalPrice * discountRate);
     const finalPrice = Math.round(originalPrice - discountAmount);
-
     return {
       totalHours,
       originalPrice,
@@ -285,18 +248,15 @@ export default function PageCalculator() {
       setPages(1);
       return;
     }
-    // The slider is capped at 20, but we keep the validation logic
-    // in case the user somehow inputs more (which they can't via slider)
     if (num > 20) {
-        setPages(20);
-        setShowValidation('For projects of more than 20 pages, please contact the web design team.');
+      setPages(20);
+      setShowValidation('For projects of more than 20 pages, please contact the web design team.');
     } else {
-        setShowValidation(null);
-        setPages(Math.floor(num));
+      setShowValidation(null);
+      setPages(Math.floor(num));
     }
   }
 
-  // Tailwind config for custom color
   const tailwindConfig = {
     theme: {
       extend: {
@@ -308,24 +268,21 @@ export default function PageCalculator() {
   };
 
   return (
-    <main className="min-h-screen  text-gray-100 p-6 mt-24 md:p-12 font-sans">
-      {/* Inject custom color */}
-      <style>
-        {`
-          :root { --color-neon: ${tailwindConfig.theme.extend.colors.neon}; }
-          .bg-neon { background-color: var(--color-neon); }
-          .text-neon { color: var(--color-neon); }
-          .border-neon { border-color: var(--color-neon); }
-          .accent-neon { accent-color: var(--color-neon); }
-          .shadow-neon { box-shadow: 0 0 15px rgba(168, 240, 0, 0.5); }
-        `}
-      </style>
-      
+    <main className="min-h-screen text-gray-100 p-6 mt-24 md:p-12 font-sans">
+
+      <style>{`
+        :root { --color-neon: ${tailwindConfig.theme.extend.colors.neon}; }
+        .bg-neon { background-color: var(--color-neon); }
+        .text-neon { color: var(--color-neon); }
+        .border-neon { border-color: var(--color-neon); }
+        .accent-neon { accent-color: var(--color-neon); }
+        .shadow-neon { box-shadow: 0 0 15px rgba(168, 240, 0, 0.5); }
+      `}</style>
+
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {/* Left / center controls */}
         <section className="lg:col-span-2 space-y-8">
-          
+
           <header className="max-w-2xl">
             <h1 className="text-4xl font-bold">Website calculator</h1>
             <div className="mt-2 -ml-1">
@@ -339,7 +296,6 @@ export default function PageCalculator() {
             </p>
           </header>
 
-          {/* Plan toggle */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {(Object.keys(PLANS) as PlanKey[]).map(key => (
               <button
@@ -361,9 +317,8 @@ export default function PageCalculator() {
             Learn more about our <a href="#" className="font-semibold text-gray-300 underline">standard</a> or <a href="#" className="font-semibold text-gray-300 underline">custom</a> websites.
           </p>
 
-          {/* Features */}
           <div className="space-y-4">
-            <h3 className="font-bold text-2xl">Which extra Features do you need?</h3>
+            <h3 className="font-bold text-2xl">Which extra features would you like to include?</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {featuresAvailable.map(f => (
                 <OptionToggle
@@ -381,7 +336,6 @@ export default function PageCalculator() {
             </div>
           </div>
 
-          {/* Pages */}
           <div className="space-y-4">
             <h3 className="font-bold text-2xl">How many pages do you have?</h3>
             <div className="bg-[#282828] p-6 rounded-lg flex items-center gap-6">
@@ -395,17 +349,13 @@ export default function PageCalculator() {
               />
               <span className="text-2xl font-bold text-neon w-12 text-right">{pages}</span>
             </div>
-            <div className="bg-[#282828] p-4 rounded-lg text-sm text-gray-400">
-              <p>For projects of more than 20 pages, please <Link href="/contact" className="font-semibold text-gray-300 underline">contact the web design team</Link>.</p>
-              {showValidation && (
-                <p className="mt-2 text-yellow-300">{showValidation}</p>
-              )}
-            </div>
+            {showValidation && (
+              <p className="text-yellow-300 text-sm">{showValidation}</p>
+            )}
           </div>
 
-          {/* Extra packs */}
           <div className="space-y-4">
-            <h3 className="font-bold text-2xl">Extra packs</h3>
+            <h3 className="font-bold text-2xl">Which packs would you like to add?</h3>
             <div className="space-y-4">
               {PACKS.map(pack => (
                 <OptionToggle
@@ -420,10 +370,8 @@ export default function PageCalculator() {
           </div>
         </section>
 
-        {/* Right aside summary */}
         <aside className="lg:sticky lg:top-48 h-fit bg-gradient-to-br from-[#282828]/60 to-[#1a1a1a]/60 p-6 rounded-2xl border-2 border-gray-700 backdrop-blur-sm shadow-lg relative">
-          
-          {/* Discount Badge */}
+
           <div className="absolute -top-6 -right-6 bg-neon text-black text-sm font-bold p-4 rounded-full w-24 h-24 flex items-center justify-center text-center -rotate-12 shadow-neon">
             15% off
             <br />
@@ -431,41 +379,45 @@ export default function PageCalculator() {
           </div>
 
           <h3 className="text-lg font-semibold text-gray-400 mb-2">TOTAL</h3>
-
           <div className="text-6xl font-bold mb-1">{totals.totalHours} Hours</div>
-          
           <div className="text-5xl font-bold text-neon mb-2">{formatEuro(totals.finalPrice)}</div>
-          
-          <p className="text-sm text-gray-400 mb-1">15% discount included.</p>
-          <p className="text-sm text-gray-400 mb-6">Prices may vary depending on <a href="#" className="font-semibold text-gray-300 underline">your country</a>.</p>
-          
 
-          {/* Included features list */}
+          <p className="text-sm text-gray-400 mb-6">15% discount included.</p>
+
+          {/* Updated summary list */}
           <div className="mt-6 text-sm text-gray-300 border-t border-gray-700 pt-6">
             <h4 className="font-medium mb-3">Included in your pack:</h4>
             <ul className="space-y-2 text-gray-400">
+              
               {plan.includedPack.map(item => (
                 <li key={item} className="flex items-center gap-2">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M13.3334 4L6.00002 11.3333L2.66669 8" stroke="#A8F000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg width="16" height="16" fill="none" stroke="#A8F000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 16 16">
+                    <path d="M13.3334 4L6.00002 11.3333L2.66669 8"/>
                   </svg>
                   {item}
                 </li>
               ))}
+
+              {packsTotals.selected.map(pack => (
+                <li key={pack.id} className="flex items-center gap-2">
+                  <svg width="16" height="16" fill="none" stroke="#A8F000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 16 16">
+                    <path d="M13.3334 4L6.00002 11.3333L2.66669 8"/>
+                  </svg>
+                  {pack.label}
+                </li>
+              ))}
+
             </ul>
           </div>
 
           <div className="mt-8">
-
-            <Link
-              href="/contact"
-              className="flex items-center justify-center gap-2 w-full px-6 py-4 rounded-full bg-neon hover:bg-opacity-90 text-black font-bold text-lg transition-all transform hover:scale-105"
-            >
+            <Link href="/contact" className="flex items-center justify-center gap-2 w-full px-6 py-4 rounded-full bg-neon hover:bg-opacity-90 text-black font-bold text-lg transition-all transform hover:scale-105">
               Discuss your project
               <ArrowRightIcon />
             </Link>
           </div>
         </aside>
+
       </div>
     </main>
   );
