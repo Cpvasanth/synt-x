@@ -11,31 +11,31 @@ const Hero: React.FC = () => {
 useEffect(() => {
   if (!vantaRef.current || vantaEffect.current) return;
 
-  // Load THREE.js first
   const threeScript = document.createElement("script");
-  threeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js";
-  threeScript.async = true;
-
+  threeScript.src =
+    "https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js";
   threeScript.onload = () => {
-    (window as any).THREE = (window as any).THREE;
-
     const vantaScript = document.createElement("script");
-    vantaScript.src = "https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js";
-    vantaScript.async = true;
-
+    vantaScript.src =
+      "https://cdn.jsdelivr.net/npm/vanta/dist/vanta.waves.min.js";
     vantaScript.onload = () => {
       if (!(window as any).VANTA) return;
 
-      vantaEffect.current = (window as any).VANTA.BIRDS({
+      vantaEffect.current = (window as any).VANTA.WAVES({
         el: vantaRef.current,
+
         mouseControls: true,
         touchControls: true,
         gyroControls: false,
-        backgroundColor: 0x000000,
-        color1: 0x9333ea,
-        color2: 0x440066,
-        birdSize: 1,
-        speed: 1.3,
+
+        // ✅ Strong visible waves
+        waveHeight: 25,
+        waveSpeed: 0.75,
+        zoom: 0.8,
+
+        // 🎨 Black & White
+        color: 0x000000,          // black waves 0xffffff
+        backgroundColor: 0xffffff // White background
       });
     };
 
@@ -52,12 +52,20 @@ useEffect(() => {
 
 
 
+
+
+
+
+
+
+
+
   return (
     <div ref={vantaRef} className={`relative w-full bg-black overflow-hidden `}>
       <div className="relative z-10 container mx-auto flex flex-col lg:flex-row justify-evenly items-center py-28 px-6">
         {/* ... your content unchanged ... */}
         <div className="max-w-4xl flex flex-col gap-6 text-center lg:text-left" >
-        <h1 className="text-3xl uppercase text-center lg:text-left lg:text-7xl font-bold leading-tight text-[#ffdf20]/80 drop-shadow-[0_0_18px_rgba(255,255,255,0.45)]">
+        <h1 className="text-3xl uppercase text-center lg:text-left lg:text-7xl font-bold leading-tight text-white/80 drop-shadow-[0_0_18px_rgba(255,255,255,0.45)]">
           Websites Engineered for<span className="relative z-10"> Tomorrow’s Market Leaders</span>
         </h1>
 
