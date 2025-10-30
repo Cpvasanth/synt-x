@@ -50,16 +50,6 @@ useEffect(() => {
 
 
 
-
-
-
-
-
-
-
-
-
-
   return (
     <div ref={vantaRef} className={`relative w-full bg-black overflow-hidden `}>
       <div className="relative z-10 container mx-auto flex flex-col lg:flex-row justify-evenly items-center py-28 px-6">

@@ -6,8 +6,8 @@ import Link from "next/link";
 const services = [
   { id: "01", title: "Web design" },
   { id: "02", title: "Logo design" },
-  { id: "03", title: "AD Shooting" },
-  // { id: "04", title: "SEO" },
+  // { id: "03", title: "AD Shooting" },
+  { id: "03", title: "SEO" },
   { id: "04", title: "Marketing" },
 ];
 

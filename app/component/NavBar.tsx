@@ -84,13 +84,13 @@ function NavBar() {
                 <li key={href} className="relative">
                   <button
                     onClick={() => setIsServicesOpen(prev => !prev)}
-                    className={`transition font-medium flex items-center space-x-1 ${
+                    className={`transition  font-medium flex items-center justify-center space-x-1 ${
                       isActive
                         ? 'text-yellow-300 underline decoration-wavy underline-offset-4'
                         : 'text-white hover:text-yellow-300'
                     }`}
                   >
-                    <span>{label}</span>
+                    <span >{label}</span>
                     <IoChevronDownSharp className={`transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
                   </button>
 
@@ -146,7 +146,7 @@ function NavBar() {
             isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
       >
-        <ul className="flex flex-col space-y-8 text-center">
+        <ul className="flex flex-col space-y-8 text-left">
           {navItems.map(({ label, href }) => (
             label === 'Services' ? (
               <li key={href}>
