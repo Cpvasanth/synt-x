@@ -48,19 +48,14 @@ useEffect(() => {
 }, []);
 
 
-
-
   return (
     <div ref={vantaRef} className={`relative w-full bg-black overflow-hidden `}>
       <div className="relative z-10 container mx-auto flex flex-col lg:flex-row justify-evenly items-center py-28 px-6">
         {/* ... your content unchanged ... */}
-        <div className="max-w-4xl flex flex-col gap-6 text-center lg:text-left" >
-        <h1 className="text-3xl uppercase text-center lg:text-left lg:text-7xl font-bold leading-tight text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.45)]">
+        <div className="max-w-4xl flex flex-col gap-6 text-center lg:text-left">
+          <h1 className="text-3xl uppercase text-center lg:text-left lg:text-7xl font-bold leading-tight text-white drop-shadow-[0_0_18px_rgba(255,255,255,0.45)]">
           Websites Engineered for<span className="relative z-10"> Tomorrow’s Market Leaders</span>
         </h1>
-
-
-
           <p className="text-xl text-gray-200  leading-">
             We craft aesthetic, functional, and user-centric websites that help
             businesses thrive in the digital world.
